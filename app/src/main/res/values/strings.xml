@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">FootTracker</string>
+    <string name="titre">FOOT TRACKER</string>
+    <string name="newMatch">NEW MATCH</string>
+    <string name="savedMatches">SAVED MATCHES</string>
+    <string name="radio_button_list">Radio button list</string>
+    <string name="choose1">MAKE YOUR MATCH SETTINGS</string>
+    <string name="chooseCompetition">COMPETION</string>
+    <string name="home">HOME</string>
+    <string name="locateMatch">LOCATE</string>
+    <string name="teams">TEAMS</string>
+    <string name="CompetitionName">Competition Name</string>
+    <string name="team1">"TEAM 1 "</string>
+    <string name="team2">TEAM 2</string>
+    <string name="add">ADD</string>
+    <string name="viewAll">VIEW ALL</string>
+    <string name="isPrivate">Private Match</string>
+    <string name="title_activity_bottom_navigation_acitivity">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
