@@ -117,9 +117,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             }while(cursor.moveToNext()); //<-- should be move to Next
         }
-        else {
+        else{
             //failure. do not anything to the list.
-
+            //fisher
         }
 
         //close both the cursor and the db when done.
