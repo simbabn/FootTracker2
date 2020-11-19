@@ -2,6 +2,7 @@ package fr.android.nazim.foottracker2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +14,16 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SQLiteDemo extends AppCompatActivity {
     //references to buttons and other controls on the Layout
     Button btn_add, btn_viewAll;
-    EditText et_compet, et_team1, et_team2;
+    EditText et_compet, et_team1, et_team2, scoreTeam1, scoreTeam2;
+    //String dateMatch;
     Switch sw_private;
     //ListView lv_matchList;
 
@@ -30,6 +35,7 @@ public class SQLiteDemo extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +47,10 @@ public class SQLiteDemo extends AppCompatActivity {
         et_team1 = findViewById(R.id.et_Team1);
         et_team2 = findViewById(R.id.et_Team2);
         sw_private = findViewById(R.id.sw_active);
+        scoreTeam1 = findViewById(R.id.scoreTeam1);
+        scoreTeam2 = findViewById(R.id.scoreTeam2);
+        //dateMatch = findViewById(R.id.insertdate);
+
         //lv_matchList = findViewById(R.id.lv_matchList);
 
         dataBaseHelper = new DataBaseHelper(SQLiteDemo.this);
@@ -82,7 +92,7 @@ public class SQLiteDemo extends AppCompatActivity {
             public void onClick(View v) {
                 homePageReturn();
 
-                DataBaseHelper adataBaseHelper = new DataBaseHelper(SQLiteDemo.this);
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(SQLiteDemo.this);
 
                 //Display in ListView
                 showMatchOnListView(dataBaseHelper);

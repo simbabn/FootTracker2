@@ -19,6 +19,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TEAM_2 = "TEAM2";
     public static final String COLUMN_ISPRIVATE = "ISPRIVATE";
     public static final String COLUMN_ID = "ID";
+    public static final String COLUMN_SCORE1 = "SCORE1";
+    public static final String COLUMN_SCORE2 = "SCORE2";
 
     public DataBaseHelper(@Nullable Context context) {
         //voir 40 min in vidéo
@@ -30,7 +32,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //We need to create a new table inside this method
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + MATCH_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY, " + COLUM_COMPET_NAME + " TEXT, " + COLUMN_TEAM_1 + " TEXT, " + COLUMN_TEAM_2 + " TEXT, " + COLUMN_ISPRIVATE + " BOOL)"; //will define the new table
+        String createTableStatement = "CREATE TABLE " + MATCH_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY, " + COLUM_COMPET_NAME + " TEXT, " + COLUMN_TEAM_1 + " TEXT, " + COLUMN_TEAM_2 + " TEXT, " + COLUMN_ISPRIVATE + " BOOL) " ; //will define the new table
         //MATCH_TABLE IS GONE TO BE USED OFTEN IN THE APP
         //REFACTOR -> INTRODUCE CONSTANT -> CONSTANT
 
@@ -109,7 +111,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String competName = cursor.getString(1);
                 String team1Name = cursor.getString(2);
                 String team2Name = cursor.getString(3);
-                Boolean isPrivateStatut = cursor.getInt (4) == 1 ? true: false ; //we have to convert the result from an int to a bool /
+                Boolean isPrivateStatut = cursor.getInt (4) == 1 ? true: false; //we have to convert the result from an int to a bool /
+                //String dateMatch = cursor.getString(7);
                 // Turnary Operator : see notes
 
                 MatchModel newMatchModel = new MatchModel(matchID,competName,team1Name,team2Name,isPrivateStatut);

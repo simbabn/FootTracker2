@@ -19,4 +19,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="score">SCORE</string>
+    <string name="scoreTeam1">TEAM 1</string>
+    <string name="scoreTeam2">TEAM 2</string>
+    <string name="dateMatch">DATE</string>
 </resources>
