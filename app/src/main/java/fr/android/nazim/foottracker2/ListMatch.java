@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import fr.android.nazim.foottracker2.entity.MatchModel;
 import fr.android.nazim.foottracker2.repo.MatchIntRepository;
@@ -18,7 +22,6 @@ public class ListMatch extends AppCompatActivity {
     ListView listMatch;
 
     ArrayAdapter matchArrayAdapter;
-    MatchIntRepository matchIntRepository;
 
     public void homePageReturn() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -39,14 +42,21 @@ public class ListMatch extends AppCompatActivity {
         listMatch = findViewById(R.id.lv_matchlist2);
         btnNewMatch = findViewById(R.id.new_Match);
 
-        //Create matchs array
-        matchArrayAdapter = new ArrayAdapter<MatchModel>(
-                ListMatch.this,
-                android.R.layout.simple_list_item_1,
-                MainActivity.getRepo().getMatchs()
-        );
-        //Display match array
-        listMatch.setAdapter(matchArrayAdapter);
+
+        //Run to thread for not blocking UI
+        new Thread(new Runnable() {
+            public void run() {
+                //Create matchs array
+                matchArrayAdapter = new ArrayAdapter<MatchModel>(
+                        ListMatch.this,
+                        android.R.layout.simple_list_item_1,
+                        MainActivity.getRepo().getMatchs()
+                );
+                //Display match array
+                listMatch.setAdapter(matchArrayAdapter);
+            }
+        }).start();
+
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override

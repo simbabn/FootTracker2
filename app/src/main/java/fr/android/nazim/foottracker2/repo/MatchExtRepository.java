@@ -5,7 +5,9 @@ import android.util.Log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import fr.android.nazim.foottracker2.entity.MatchModel;
@@ -21,7 +23,7 @@ public class MatchExtRepository implements FootRepository{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        thrdConnection = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             public void run() {
                 while (!Thread.interrupted()) {
                     try {
@@ -40,8 +42,7 @@ public class MatchExtRepository implements FootRepository{
                     }
                 }
             }
-        });
-        if ((thrdConnection != null) && (!thrdConnection.isAlive())) thrdConnection.start();
+        }).start();
     }
 
     public void insertMatch(final MatchModel match){
@@ -68,15 +69,27 @@ public class MatchExtRepository implements FootRepository{
 
     public ArrayList<MatchModel> getMatchs() {
         ArrayList<MatchModel> matchs = new ArrayList<>();
-        matchs.add(new MatchModel(
-                "test",
-                "ee",
-                "rr",
-                false,
-                12,
-                13,
-                0
-        ));
+        try {
+            Statement stmt = connection.createStatement();
+            String myQuery = "select * from `match`";
+            ResultSet rs = stmt.executeQuery(myQuery);
+            while (rs.next()) {
+                matchs.add(new MatchModel(
+                        rs.getString("name"),
+                        rs.getString("team1"),
+                        rs.getString("team2"),
+                        rs.getBoolean("isPrivate"),
+                        rs.getInt("score1"),
+                        rs.getInt("score2"),
+                        rs.getInt("id")
+                    )
+                );
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e){
+            Log.e("REPOSITORY_jdbc", e.getMessage());
+        }
         return matchs;
     }
 
@@ -88,51 +101,4 @@ public class MatchExtRepository implements FootRepository{
 
         }
     }
-
-    /*
-
-    thrd2 = new Thread(new Runnable() {
-        public void run() {
-            while (!Thread.interrupted()) {
-
-                if (con != null) {
-                    try {
-                        //   con = DriverManager.getConnection("jdbc:mysql://192.168.1.45:3306/deneme", "ali", "12345");
-                        Statement st = con.createStatement();
-                        String ali = "'fff'";
-                        st.execute("INSERT INTO deneme (name) VALUES(" + ali + ")");
-                        //  ResultSet rs = st.executeQuery("select * from deneme");
-                        //  ResultSetMetaData rsmd = rs.getMetaData();
-                        //  String result = new String();
-
-
-                        //  while (rs.next()) {
-                        //      result += rsmd.getColumnName(1) + ": " + rs.getInt(1) + "\n";
-                        //       result += rsmd.getColumnName(2) + ": " + rs.getString(2) + "\n";
-
-
-                        //   }
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        con = null;
-                    }
-
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-    });*/
-
 }
