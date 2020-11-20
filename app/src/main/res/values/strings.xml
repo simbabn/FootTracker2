@@ -23,4 +23,12 @@
     <string name="scoreTeam1">TEAM 1</string>
     <string name="scoreTeam2">TEAM 2</string>
     <string name="dateMatch">DATE</string>
+    <string name="longname">Longitude</string>
+    <string name="longName">LONGITUDE</string>
+    <string name="latitude">"LATITUDE : "</string>
+    <string name="address">ADDRESS</string>
+    <string name="locUp">Location Updates</string>
+    <string name="gpsSavePower">GPS/SavePower</string>
+    <string name="setLoc">SET LOCATION</string>
+    <string name="sensor">"Sensor : "</string>
 </resources>

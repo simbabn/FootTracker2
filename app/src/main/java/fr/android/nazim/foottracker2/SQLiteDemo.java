@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SQLiteDemo extends AppCompatActivity {
     //references to buttons and other controls on the Layout
-    Button btn_add, btn_viewAll;
+    Button btn_add, btn_viewAll, btn_setLoc;
     EditText et_compet, et_team1, et_team2, scoreTeam1, scoreTeam2;
     //String dateMatch;
     Switch sw_private;
@@ -32,6 +32,11 @@ public class SQLiteDemo extends AppCompatActivity {
 
     public void homePageReturn(){
         Intent intent = new Intent(this, Affichage.class);
+        startActivity(intent);
+    }
+
+    public void setLocation(){
+        Intent intent = new Intent(this, LocationMatch.class);
         startActivity(intent);
     }
 
@@ -49,6 +54,7 @@ public class SQLiteDemo extends AppCompatActivity {
         sw_private = findViewById(R.id.sw_active);
         scoreTeam1 = findViewById(R.id.scoreTeam1);
         scoreTeam2 = findViewById(R.id.scoreTeam2);
+        btn_setLoc  = findViewById(R.id.setLocation);
         //dateMatch = findViewById(R.id.insertdate);
 
         //lv_matchList = findViewById(R.id.lv_matchList);
@@ -98,6 +104,13 @@ public class SQLiteDemo extends AppCompatActivity {
                 showMatchOnListView(dataBaseHelper);
 
                 //Toast.makeText(SQLiteDemo.this, dataBaseHelper.getAllMatches().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btn_setLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            setLocation();
             }
         });
 
