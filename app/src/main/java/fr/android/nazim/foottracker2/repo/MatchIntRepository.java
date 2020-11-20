@@ -1,4 +1,4 @@
-package fr.android.nazim.foottracker2;
+package fr.android.nazim.foottracker2.repo;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+import fr.android.nazim.foottracker2.entity.MatchModel;
+
+public class MatchIntRepository extends SQLiteOpenHelper {
 
     public static final String MATCH_TABLE = "MATCH_TABLE";
     public static final String COLUM_COMPET_NAME = "COMPET_NAME";
@@ -22,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SCORE1 = "SCORE1";
     public static final String COLUMN_SCORE2 = "SCORE2";
 
-    public DataBaseHelper(@Nullable Context context) {
+    public MatchIntRepository(@Nullable Context context) {
         //voir 40 min in vidéo
         super(context, "match.db", null, 1);
     }
@@ -115,7 +117,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 //String dateMatch = cursor.getString(7);
                 // Turnary Operator : see notes
 
-                MatchModel newMatchModel = new MatchModel(matchID,competName,team1Name,team2Name,isPrivateStatut);
+                MatchModel newMatchModel = new MatchModel(
+                        competName,
+                        team1Name,
+                        team2Name,
+                        isPrivateStatut,
+                        0,
+                        0 ,
+                        matchID);
                 returnList.add(newMatchModel);
 
             }while(cursor.moveToNext()); //<-- should be move to Next

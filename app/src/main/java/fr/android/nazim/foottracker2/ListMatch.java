@@ -9,40 +9,46 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class Affichage extends AppCompatActivity {
+import fr.android.nazim.foottracker2.entity.MatchModel;
+import fr.android.nazim.foottracker2.repo.MatchIntRepository;
 
-    Button btnHome,btnNewMatch;
+public class ListMatch extends AppCompatActivity {
+
+    Button btnHome, btnNewMatch;
     ListView listMatch;
 
     ArrayAdapter matchArrayAdapter;
-    DataBaseHelper dataBaseHelper;
+    MatchIntRepository matchIntRepository;
 
-    public void homePageReturn(){
+    public void homePageReturn() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void addNewMatch(){
-        Intent intent = new Intent(this, SQLiteDemo.class);
+    public void addNewMatch() {
+        Intent intent = new Intent(this, CreateMatch.class);
         startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_affichage);
-        
+        setContentView(R.layout.activity_list_match);
+
         btnHome = findViewById(R.id.btnHome);
         listMatch = findViewById(R.id.lv_matchlist2);
         btnNewMatch = findViewById(R.id.new_Match);
 
-        dataBaseHelper = new DataBaseHelper(Affichage.this);
+        //Create matchs array
+        matchArrayAdapter = new ArrayAdapter<MatchModel>(
+                ListMatch.this,
+                android.R.layout.simple_list_item_1,
+                MainActivity.getRepo().getMatchs()
+        );
+        //Display match array
+        listMatch.setAdapter(matchArrayAdapter);
 
-
-        //Display/add in ListView
-        showMatchOnListView(dataBaseHelper);
-
-        btnHome.setOnClickListener(new View.OnClickListener(){
+        btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 homePageReturn();
@@ -56,10 +62,5 @@ public class Affichage extends AppCompatActivity {
             }
         });
 
-    }
-    //method to display/add matches in listView
-    private void showMatchOnListView(DataBaseHelper dataBaseHelper2) {
-        matchArrayAdapter = new ArrayAdapter<MatchModel>(Affichage.this, android.R.layout.simple_list_item_1, dataBaseHelper2.getAllMatches());
-        listMatch.setAdapter(matchArrayAdapter);
     }
 }
