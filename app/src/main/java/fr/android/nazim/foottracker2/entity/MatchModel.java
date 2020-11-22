@@ -1,4 +1,4 @@
-package fr.android.nazim.foottracker2;
+package fr.android.nazim.foottracker2.entity;
 
 import java.util.Date;
 import java.time.LocalDateTime;
@@ -7,38 +7,47 @@ import java.time.LocalDateTime;
 // Class MatchModel with all the value of our object
 public class MatchModel {
     private int id;
-    private String competitionType, team1, team2, scoreTeam1, scoreTeam2;
+    private String competitionType, team1, team2;
+    private int scoreTeam1, scoreTeam2;
     private boolean isPrivate;
     private String dateMatch;
 
     //Construteurs
-    public MatchModel(int id, String competitionType, String team1, String team2, boolean isPrivate) {
+    public MatchModel(
+            String competitionType,
+            String team1,
+            String team2,
+            boolean isPrivate,
+            int scoreTeam1,
+            int scoreTeam2,
+            int id
+    ) {
         this.id = id;
         this.competitionType = competitionType;
         this.team1 = team1;
         this.team2 = team2;
         this.isPrivate = isPrivate;
-        //this.scoreTeam1 = scoreTeam1;
-        //this.scoreTeam2 = scoreTeam2;
+        this.scoreTeam1 = scoreTeam1;
+        this.scoreTeam2 = scoreTeam2;
         //this.dateMatch = dateMatch;
     }
     //
     public MatchModel() {
     }
     //Geters & Seters
-    public String getScoreTeam1() {
+    public int getScoreTeam1() {
         return scoreTeam1;
     }
 
-    public void setScoreTeam1(String scoreTeam1) {
+    public void setScoreTeam1(int scoreTeam1) {
         this.scoreTeam1 = scoreTeam1;
     }
 
-    public String getScoreTeam2() {
+    public int getScoreTeam2() {
         return scoreTeam2;
     }
 
-    public void setScoreTeam2(String scoreTeam2) {
+    public void setScoreTeam2(int scoreTeam2) {
         this.scoreTeam2 = scoreTeam2;
     }
     /*
