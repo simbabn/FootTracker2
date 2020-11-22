@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import fr.android.nazim.foottracker2.repo.FootRepository;
 import fr.android.nazim.foottracker2.repo.MatchExtRepository;
+import fr.android.nazim.foottracker2.repo.MatchIntRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Use SQL External database
         repo = new MatchExtRepository();
+        //Use SQLite internal database
+        //repo = new MatchIntRepository(this);
 
         newMatch = findViewById(R.id.button2);
         previousMatch = findViewById(R.id.button);

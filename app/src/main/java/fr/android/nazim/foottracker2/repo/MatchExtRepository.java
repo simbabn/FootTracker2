@@ -68,6 +68,7 @@ public class MatchExtRepository implements FootRepository{
     }
 
     public ArrayList<MatchModel> getMatchs() {
+        Log.i("REPOSITORY_jdbc_get", "all matchs");
         ArrayList<MatchModel> matchs = new ArrayList<>();
         try {
             Statement stmt = connection.createStatement();

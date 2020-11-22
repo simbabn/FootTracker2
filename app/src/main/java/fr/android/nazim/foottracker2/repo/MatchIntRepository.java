@@ -5,50 +5,47 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.android.nazim.foottracker2.entity.MatchModel;
 
-public class MatchIntRepository extends SQLiteOpenHelper {
+public class MatchIntRepository extends SQLiteOpenHelper implements FootRepository {
 
-    public static final String MATCH_TABLE = "MATCH_TABLE";
-    public static final String COLUM_COMPET_NAME = "COMPET_NAME";
-    public static final String COLUMN_TEAM_1 = "TEAM1";
-    public static final String COLUMN_TEAM_2 = "TEAM2";
-    public static final String COLUMN_ISPRIVATE = "ISPRIVATE";
-    public static final String COLUMN_ID = "ID";
-    public static final String COLUMN_SCORE1 = "SCORE1";
-    public static final String COLUMN_SCORE2 = "SCORE2";
+    public static final String MATCH_TABLE = "match";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_COMPET_NAME = "name";
+    public static final String COLUMN_TEAM_1 = "team1";
+    public static final String COLUMN_TEAM_2 = "team2";
+    public static final String COLUMN_ISPRIVATE = "isPrivate";
+    public static final String COLUMN_SCORE1 = "score1";
+    public static final String COLUMN_SCORE2 = "score2";
 
     public MatchIntRepository(@Nullable Context context) {
-        //voir 40 min in vidéo
         super(context, "match.db", null, 1);
+
+        //Create database
+        SQLiteDatabase db = this.getWritableDatabase();
+        String createTableStatement = "CREATE TABLE IF NOT EXISTS `match` (`" + COLUMN_ID + "` INTEGER PRIMARY KEY, `" + COLUMN_COMPET_NAME + "` TEXT, `" + COLUMN_TEAM_1 + "` TEXT, `" + COLUMN_TEAM_2 + "` TEXT, `" + COLUMN_SCORE1 + "` INT, `" + COLUMN_SCORE2 + "` INT, `" + COLUMN_ISPRIVATE + "` BOOL)"; //will define the new table
+        db.execSQL(createTableStatement);
+        Log.i("REPOSITORY_sqlite", "Database created");
     }
 
-    //this is called the first time a databse is accessed. There should be code in here to create a new database
-    //onCreate method is automatically called when the app requests or inputs new data.
-    //We need to create a new table inside this method
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + MATCH_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY, " + COLUM_COMPET_NAME + " TEXT, " + COLUMN_TEAM_1 + " TEXT, " + COLUMN_TEAM_2 + " TEXT, " + COLUMN_ISPRIVATE + " BOOL) " ; //will define the new table
-        //MATCH_TABLE IS GONE TO BE USED OFTEN IN THE APP
-        //REFACTOR -> INTRODUCE CONSTANT -> CONSTANT
 
-        db.execSQL(createTableStatement);
     }
 
-    //this is called if the database version number changes. It prevents previous users apps from breaking when you change the database design
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 
     //create a method addOne record the new DataBase
-    public boolean addOne(MatchModel matchModel ){
+    public void insertMatch(MatchModel matchModel ){
         SQLiteDatabase db = this.getWritableDatabase();//came from the properties of SQLiteOpenHelper
         //getWritableDatabase for insert actions
         //getReadableDatabase to select (read) actions
@@ -57,48 +54,26 @@ public class MatchIntRepository extends SQLiteOpenHelper {
         //like to put Extras in an Intent
 
         //not necessary to provide an ID number when inserting a new record.  ID beacause is auto increment dataBase
-        cv.put(COLUM_COMPET_NAME, matchModel.getCompetitionType());
+        cv.put(COLUMN_COMPET_NAME, matchModel.getCompetitionType());
         cv.put(COLUMN_TEAM_1, matchModel.getTeam1());
         cv.put(COLUMN_TEAM_2, matchModel.getTeam2());
         cv.put(COLUMN_ISPRIVATE, matchModel.isPrivate());
+        cv.put(COLUMN_SCORE1, matchModel.getScoreTeam1());
+        cv.put(COLUMN_SCORE2, matchModel.getScoreTeam2());
 
-        long insert = db.insert(MATCH_TABLE, null ,cv);
-        if (insert == -1){
-            return false;
-        }
-        else{
-            return true;
-        }
+        db.insert(MATCH_TABLE, null ,cv);
     }
 
-    public boolean deleteOne(MatchModel matchModel){
-        //find matchModel in the database. it it found, delete it and return true
-        //it it is not found return false
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "DELETE FROM " + MATCH_TABLE + " WHERE " + COLUMN_ID + " = " + matchModel.getId();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if (cursor.moveToFirst()){
-            return true;
-        }
-        else {
-            return false;
-        }
-
-    }
-
-    public List<MatchModel> getAllMatches() {
+    public ArrayList<MatchModel>  getMatchs() {
         //Create an empty list
         //Fill it from the database query
         //Return it to the MainActivity
 
-        List<MatchModel> returnList  = new ArrayList<>();
+        ArrayList<MatchModel> returnList  = new ArrayList<>();
 
         //get data from the dataBase
 
-        String queryString = "SELECT * FROM " + MATCH_TABLE;
+        String queryString = "SELECT * FROM `" + MATCH_TABLE + "`";
         //use getWritableDatabase only when you plan to insert, update or delete records : locks the data file so other process may not access it
         //use getReadableDatabase when you plan to SELECT items from the database
         SQLiteDatabase db = this.getReadableDatabase();
@@ -113,17 +88,17 @@ public class MatchIntRepository extends SQLiteOpenHelper {
                 String competName = cursor.getString(1);
                 String team1Name = cursor.getString(2);
                 String team2Name = cursor.getString(3);
-                Boolean isPrivateStatut = cursor.getInt (4) == 1 ? true: false; //we have to convert the result from an int to a bool /
-                //String dateMatch = cursor.getString(7);
-                // Turnary Operator : see notes
+                Integer score_team1 = cursor.getInt(4);
+                Integer score_team2 = cursor.getInt(5);
+                Boolean isPrivateStatut = cursor.getInt (6) == 1 ? true: false; //we have to convert the result from an int to a bool /
 
                 MatchModel newMatchModel = new MatchModel(
                         competName,
                         team1Name,
                         team2Name,
                         isPrivateStatut,
-                        0,
-                        0 ,
+                        score_team1,
+                        score_team2 ,
                         matchID);
                 returnList.add(newMatchModel);
 
@@ -138,6 +113,10 @@ public class MatchIntRepository extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
+    }
+
+    public void closeConnection() {
+
     }
 
 }
