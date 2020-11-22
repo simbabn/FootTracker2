@@ -10,7 +10,7 @@ docker-compose up
 
 ## Features
 
-- [ ] Intent externe photo
+- [ ] Intent externe photo
 - [x] BDD externe
 - [x] BDD interne
 - [ ] maps
