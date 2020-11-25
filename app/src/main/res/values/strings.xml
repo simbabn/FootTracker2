@@ -31,4 +31,6 @@
     <string name="gpsSavePower">GPS/SavePower</string>
     <string name="setLoc">SET LOCATION</string>
     <string name="sensor">"Sensor : "</string>
+    <string name="take_photo">Take photo</string>
+    <string name="camera">Camera</string>
 </resources>
