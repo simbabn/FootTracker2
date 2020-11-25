@@ -106,11 +106,7 @@ private void updateValues(Location location) {
 static final int REQUEST_IMAGE_CAPTURE = 1;
 private void dispatchTakePictureIntent() {
     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    try {
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-    } catch (ActivityNotFoundException ignored) {
-
-    }
+    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 }
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
