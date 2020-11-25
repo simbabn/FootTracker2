@@ -1,8 +1,10 @@
 package fr.android.nazim.foottracker2;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -36,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Use SQL External database
-        repo = new MatchExtRepository();
+        //repo = new MatchExtRepository();
         //Use SQLite internal database
-        //repo = new MatchIntRepository(this);
+        repo = new MatchIntRepository(this);
 
         newMatch = findViewById(R.id.button2);
         previousMatch = findViewById(R.id.button);
@@ -58,6 +60,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showChangeLanguageDialog(){
+
+        //array of language to display in a alert dialog
+        final String[] listItems =  {"French","English"};
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        mBuilder.setTitle("Choose Language...");
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0){
+                    //French
+                    setLocale("fr");
+                    recreate();
+                }
+                else if(which == 1){
+                    //english
+                    setLocale("en");
+                }
+
+                //dismiss alert dialog when language selected
+                dialog.dismiss();
+
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+    }
+
+    private void setLocale(String fr) {
     }
 
     @Override

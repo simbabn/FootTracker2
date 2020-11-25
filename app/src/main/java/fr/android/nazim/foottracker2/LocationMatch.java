@@ -13,6 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -116,10 +117,9 @@ public class LocationMatch extends AppCompatActivity {
 
     }//END ONCREATE()
 
-
+    // ___________ STOP LOCATION ________
     @SuppressLint("MissingPermission")
     private void stopLocationUpdates() {
-
 
         varAddress.setText("Not Tracking location");
         varLong.setText("Not Tracking location");
@@ -129,7 +129,7 @@ public class LocationMatch extends AppCompatActivity {
 
     }
 
-
+    // __________ START LOCATION ___________
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -192,6 +192,7 @@ public class LocationMatch extends AppCompatActivity {
         varLat.setText(String.valueOf(location.getLatitude()));
         varLong.setText(String.valueOf(location.getLongitude()));
 
+
         Geocoder geocoder = new Geocoder(LocationMatch.this);
 
         try{
@@ -200,6 +201,7 @@ public class LocationMatch extends AppCompatActivity {
         }
         catch (Exception e){
             varAddress.setText("Unable to get street address");
+            //Log.e.getMessage("eeeee");
         }
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Match de FOOT</string>
+    <string name="titre">MATCH DE FOOT</string>
+    <string name="newMatch">NOUVEAU MATCH</string>
+    <string name="savedMatches">MATCHS SAUVÉS</string>
+    <string name="radio_button_list">BOUTON RADIOt</string>
+    <string name="choose1">PLANIFER VOTRE MATCH</string>
+    <string name="chooseCompetition">COMPETION</string>
+    <string name="home">ACCUEIL</string>
+    <string name="locateMatch">LOCALISER</string>
+    <string name="teams">EQUIPES</string>
+    <string name="CompetitionName">NOM COMPETITION</string>
+    <string name="team1">ÉQUIPE 1</string>
+    <string name="team2">ÉQUIPE 2</string>
+    <string name="add">AJOUTER</string>
+    <string name="viewAll">AFFICHERL</string>
+    <string name="isPrivate">MATCH HUIT-CLOS</string>
+    <string name="title_activity_bottom_navigation_acitivity">ACITIVTÉ PRINCIPALE</string>
+    <string name="title_home">ACCUEIL</string>
+    <string name="title_dashboard">TABLEAU DE BORD</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="score">SCORE</string>
+    <string name="scoreTeam1">ÉQUIPE 1</string>
+    <string name="scoreTeam2">ÉQUIPE 2</string>
+    <string name="dateMatch">DATE</string>
+    <string name="longname">LONGITUDE : </string>
+    <string name="longName">LONGITUDE : </string>
+    <string name="latitude">LATITUDE : </string>
+    <string name="address">ADRESSE</string>
+    <string name="locUp">MAJ LOCALISATION</string>
+    <string name="gpsSavePower">GPS/SavePower</string>
+    <string name="setLoc">LOCALISER</string>
+    <string name="sensor">CAPTEUR : </string>
+</resources>

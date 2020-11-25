@@ -50,7 +50,8 @@ public class ListMatch extends AppCompatActivity {
                 matchArrayAdapter = new ArrayAdapter<MatchModel>(
                         ListMatch.this,
                         android.R.layout.simple_list_item_1,
-                        MainActivity.getRepo().getMatchs()
+                        MainActivity.getRepo().getMatchs() // récupère le repo qui a été instancié dans MainActivity
+                        // on modifie juste un commentaire pour changer la base de donnée utilisée 
                 );
                 //Display match array
                 listMatch.setAdapter(matchArrayAdapter);
