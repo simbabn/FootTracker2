@@ -15,7 +15,7 @@ import fr.android.nazim.foottracker2.repo.MatchIntRepository;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button newMatch, previousMatch;
+    private Button newMatch, previousMatch, take_photo;
     private TextView textView;
     private static FootRepository repo;
 
@@ -30,19 +30,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openTakePhoto(){
+        Intent intent = new Intent(this, TakePhoto.class);
+        startActivity(intent);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //Use SQL External database
-        repo = new MatchExtRepository();
+        //repo = new MatchExtRepository();
         //Use SQLite internal database
-        //repo = new MatchIntRepository(this);
+        repo = new MatchIntRepository(this);
 
         newMatch = findViewById(R.id.button2);
         previousMatch = findViewById(R.id.button);
         textView = findViewById(R.id.textView);
+        take_photo = findViewById(R.id.btn_takephoto);
+
 
         newMatch.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -50,11 +58,16 @@ public class MainActivity extends AppCompatActivity {
                 openActivity2();
             }
         });
-
         previousMatch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 openSavedMatches();
+            }
+        });
+        take_photo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openTakePhoto();
             }
         });
 
