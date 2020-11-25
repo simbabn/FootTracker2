@@ -97,7 +97,11 @@ private void updateValues(Location location) {
 
 ### Rotation
 
+ - [`land/activity_main.xml`](app/src/main/res/layout-land/activity_main.xml)
+
 ### Internationalization
+
+
 
 ### Take Photo and display result
 
