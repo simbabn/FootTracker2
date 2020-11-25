@@ -15,7 +15,7 @@ docker-compose up -d
 - [x] [BDD externe](#database)
 - [x] [BDD interne](#database)
 - [x] [Maps geo](#maps-location-subscribe)
-- [ ] [Rotate](#rotation)
+- [x] [Rotate](#rotation)
 - [ ] [Internationalization](#internationalization)
 
 ### Database
