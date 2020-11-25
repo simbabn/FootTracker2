@@ -11,7 +11,7 @@ docker-compose up -d
 
 ### Features
 
-- [ ] [Intent externe photo]
+- [ ] [Intent externe photo](#external-intent)
 - [x] [BDD externe](#database)
 - [x] [BDD interne](#database)
 - [x] [Maps geo](#maps-location-subscribe)
@@ -37,8 +37,8 @@ public class MatchModel {
 ...
 ```
 
-Interface d'un `repository`
-- [`FootRepository`](app/src/main/java/fr/android/nazim/foottracker2/repo/FootRepository.java
+Interface d'un **repository**
+- [`FootRepository`](app/src/main/java/fr/android/nazim/foottracker2/repo/FootRepository.java)
 ```java
 //...repository.FootRepository.java
 ...
@@ -52,7 +52,7 @@ public interface FootRepository {
  - [`Repository BDD SQLite`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchIntRepository.java)
  - [`Repository BDD MariaDB (with JDBC and Mysql-connector)`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchExtRepository.java)
 
- `Selection` du repository à utiliser :
+ **Selection** du repository à utiliser :
  - [`MainActivity`](app/src/main/java/fr/android/nazim/foottracker2/MainActivity.java)
 ```java
 ...
