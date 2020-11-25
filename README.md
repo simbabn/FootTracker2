@@ -11,12 +11,12 @@ docker-compose up -d
 
 ### Features
 
-- [ ] Intent externe photo
-- [x] BDD externe
-- [x] BDD interne
-- [x] Maps geo
-- [ ] Rotate
-- [ ] Internationalization
+- [ ] [Intent externe photo]
+- [x] [BDD externe](#database)
+- [x] [BDD interne](#database)
+- [x] [Maps geo](#maps-location-subscribe)
+- [ ] [Rotate](#rotation)
+- [ ] [Internationalization](#internationalization)
 
 ### Database
 
@@ -38,6 +38,7 @@ public class MatchModel {
 ```
 
 Interface d'un `repository`
+- [`FootRepository`](app/src/main/java/fr/android/nazim/foottracker2/repo/FootRepository.java
 ```java
 //...repository.FootRepository.java
 ...
@@ -49,10 +50,22 @@ public interface FootRepository {
 ```
 
  - [`Repository BDD SQLite`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchIntRepository.java)
- - [`Repository BDD MariaDB (with JDBC and Mysql-connector`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchExtRepository.java)
+ - [`Repository BDD MariaDB (with JDBC and Mysql-connector)`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchExtRepository.java)
+
+ `Selection` du repository à utiliser :
+ - [`MainActivity`](app/src/main/java/fr/android/nazim/foottracker2/MainActivity.java)
+```java
+...
+//Use SQL External database
+repo = new MatchExtRepository();
+//Use SQLite internal database
+repo = new MatchIntRepository(this);
+...
+```
 
 ### Maps location subscribe
 
+ - [`LocationMatch`](app/src/main/java/fr/android/nazim/foottracker2/LocationMatch.java)
  ```java 
 LocationRequest locationRequest;
 ...
@@ -81,3 +94,7 @@ private void updateValues(Location location) {
     }
 }
 ```
+
+### Rotation
+
+### Internationalization
