@@ -20,8 +20,6 @@ docker-compose up -d
 
 ### Database
 
-## Repository interface
-
 Interface Java pour définir comment doit se comporter un repository.
 Le repository est instancié de manière static dans la class `MainActivity`.
 Il est accessible depuis un `getter` public pour toutes les autres classes.
@@ -50,6 +48,36 @@ public interface FootRepository {
 }
 ```
 
-[`Repository BDD SQLite`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchIntRepository.java)
-[`Repository BDD MariaDB (with JDBC and Mysql-connector`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchExtRepository.java)
+ - [`Repository BDD SQLite`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchIntRepository.java)
+ - [`Repository BDD MariaDB (with JDBC and Mysql-connector`](app/src/main/java/fr/android/nazim/foottracker2/repo/MatchExtRepository.java)
 
+### Maps location subscribe
+
+ ```java 
+LocationRequest locationRequest;
+...
+locationRequest = new LocationRequest();
+locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
+locationRequest.setFastestInterval(1000 * FAST_UPDATE_INTERVAL);
+locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+locationCallBack = new LocationCallback() {
+    @Override
+    public void onLocationResult(LocationResult locationResult) {
+        super.onLocationResult(locationResult);
+        updateValues(locationResult.getLastLocation());
+    }
+};
+...
+private void updateValues(Location location) {
+    varLat.setText(String.valueOf(location.getLatitude()));
+    varLong.setText(String.valueOf(location.getLongitude()));
+    Geocoder geocoder = new Geocoder(LocationMatch.this);
+    try{
+        List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
+        varAddress.setText(address.get(0).getAddressLine(0));
+    }
+    catch (Exception e){
+        varAddress.setText("Unable to get street address");
+    }
+}
+```
