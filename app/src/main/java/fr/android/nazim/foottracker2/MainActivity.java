@@ -1,15 +1,21 @@
 package fr.android.nazim.foottracker2;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 import fr.android.nazim.foottracker2.repo.FootRepository;
 import fr.android.nazim.foottracker2.repo.MatchExtRepository;
@@ -17,7 +23,7 @@ import fr.android.nazim.foottracker2.repo.MatchIntRepository;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button newMatch, previousMatch, take_photo;
+    private Button newMatch, previousMatch, take_photo, changeLang;
     private TextView textView;
     private static FootRepository repo;
 
@@ -41,7 +47,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocal();
         setContentView(R.layout.activity_main);
+
+        //change Actionbar title, if you dont change it will be according to yout system default language
+
 
         //Use SQL External database
         //repo = new MatchExtRepository();
@@ -52,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         previousMatch = findViewById(R.id.button);
         textView = findViewById(R.id.textView);
         take_photo = findViewById(R.id.btn_takephoto);
-
+        changeLang = findViewById(R.id.changeLang);
 
         newMatch.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -73,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        changeLang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangeLanguageDialog();
+            }
+        });
+
     }
 
     private void showChangeLanguageDialog(){
@@ -81,17 +98,25 @@ public class MainActivity extends AppCompatActivity {
         final String[] listItems =  {"French","English"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         mBuilder.setTitle("Choose Language...");
+        //int which;
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Configuration config;
+                config = new Configuration(getResources().getConfiguration());
                 if (which == 0){
                     //French
-                    setLocale("fr");
+                    //setLocale("fr");
+                    config.locale=Locale.FRENCH;
+                    getResources().updateConfiguration(config, getResources().getDisplayMetrics());
                     recreate();
                 }
                 else if(which == 1){
                     //english
-                    setLocale("en");
+                    //setLocale("en");
+                    config.locale=Locale.ENGLISH;
+                    getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+                    recreate();
                 }
 
                 //dismiss alert dialog when language selected
@@ -101,9 +126,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
         AlertDialog mDialog = mBuilder.create();
+        //show alert dialog
+        mDialog.show();
+        /*Configuration conf = new Configuration();
+        getResources().updateConfiguration(conf, getResources().getDisplayMetrics());
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+        //return super.onOptionsItemSelected(which);*/
     }
 
-    private void setLocale(String fr) {
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        //Locale.setDefault(locale);
+        Configuration conf = new Configuration();
+        conf.locale= locale;
+        getBaseContext().getResources().updateConfiguration(conf,getBaseContext().getResources().getDisplayMetrics());
+
+        //save Data to shared preferences
+        SharedPreferences.Editor edit = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        edit.putString("My_lang", lang);
+        edit.apply();
+
+    }
+
+
+    //load language save in sahred preferences
+    public void loadLocal(){
+        SharedPreferences prefs = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
+        String language  = prefs.getString("My_Lang", "");
+        setLocale(language );
     }
 
     @Override

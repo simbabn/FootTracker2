@@ -32,4 +32,8 @@
     <string name="gpsSavePower">GPS/SavePower</string>
     <string name="setLoc">LOCALISER</string>
     <string name="sensor">CAPTEUR : </string>
+    <string name="take_photo">PRENDRE PHOTO</string>
+    <string name="camera">Camera</string>
+    <string name="changeLang">CHANGE LANGUE</string>
+
 </resources>
